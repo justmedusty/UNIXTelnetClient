@@ -61,13 +61,12 @@ int main(int argc, char *argv[]) {
     for (p = serverInfo; p != NULL; p = p->ai_next) {
         //Here we will try to get the socket file dscriptor with the system call, socket, if error then iterate to the next entry in the list and start over
         if ((sockFd = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) == -1) {
-            perror("Error creating client socket\n");
             continue;
         }
         //Attempt to connect to the server socket
         if (connect(sockFd, p->ai_addr, p->ai_addrlen) == -1) {
             close(sockFd);
-            perror("Error connecting client\n");
+            continue;
         }
         //break the loop
         break;
@@ -75,7 +74,7 @@ int main(int argc, char *argv[]) {
     //If the pointed to entry in the list is NULL, something went wrong and we need to handle this by returning with an error code (non 0)
     if (p == NULL) {
         fprintf(stderr, "Client failed to connect\n");
-        exit(EXIT_FAILURE);
+        _exit(EXIT_FAILURE);
     }
 
     //We can free serverInfo since we are done with the memory now

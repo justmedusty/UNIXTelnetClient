@@ -1,7 +1,7 @@
 //
 // Created by dustyn on 4/11/24.
 //
-
+#include "pthread.h"
 #ifndef UNIXTELNETCLIENT_THREADFUNCTION_H
 #define UNIXTELNETCLIENT_THREADFUNCTION_H
 #ifndef BUFSIZE
